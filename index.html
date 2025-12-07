@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Spora yeni başlayanlar için basit ve kullanışlı fitness ve sağlık takip uygulaması">
+    <title>Fitness Takip - Sağlıklı Yaşam</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>💪 Fitness Takip Uygulaması</h1>
+            <p>Sağlıklı yaşam yolculuğunuz başlıyor!</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <div class="container">
+                
+                <!-- ============================================================
+                     KARŞILAMA SAYFASI (İlk Giriş)
+                     ============================================================ -->
+                <div id="welcome-page" class="page">
+                    <div class="welcome-container">
+                        <div class="welcome-hero">
+                            <h2>👋 Hoş Geldiniz!</h2>
+                            <p>Fitness yolculuğunuza başlamak için profilinizi oluşturalım</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="margin-bottom: 1.5rem; text-align: center;">Profil Bilgileriniz</h3>
+                            <form id="profile-form">
+                                <div class="form-group">
+                                    <label for="profile-name">İsim *</label>
+                                    <input type="text" id="profile-name" placeholder="Adınız" required>
+                                </div>
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="profile-age">Yaş *</label>
+                                        <input type="number" id="profile-age" placeholder="Örn: 25" min="10" max="120" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="profile-height">Boy (cm) *</label>
+                                        <input type="number" id="profile-height" placeholder="Örn: 170" min="100" max="250" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="profile-weight">Kilo (kg) *</label>
+                                        <input type="number" id="profile-weight" placeholder="Örn: 70" min="30" max="300" step="0.1" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="profile-gender">Cinsiyet *</label>
+                                        <select id="profile-gender" required>
+                                            <option value="">Seçiniz</option>
+                                            <option value="male">Erkek</option>
+                                            <option value="female">Kadın</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                                    Başlayalım! 🚀
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     DASHBOARD (Ana Sayfa)
+                     ============================================================ -->
+                <div id="dashboard-page" class="page">
+                    <div class="dashboard-header">
+                        <h2>Merhaba, <span id="user-name">Kullanıcı</span>! 👋</h2>
+                        <p class="motivational-message" id="motivational-message">Harika bir gün sizi bekliyor!</p>
+                    </div>
+
+                    <!-- İstatistik Kartları -->
+                    <div class="stats-grid">
+                        <div class="stat-card consumed">
+                            <div class="stat-label">Alınan Kalori</div>
+                            <div class="stat-value">
+                                <span id="consumed-calories">0</span>
+                                <span class="stat-unit">kcal</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card burned">
+                            <div class="stat-label">Yakılan Kalori</div>
+                            <div class="stat-value">
+                                <span id="burned-calories">0</span>
+                                <span class="stat-unit">kcal</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card net">
+                            <div class="stat-label">Net Kalori</div>
+                            <div class="stat-value">
+                                <span id="net-calories">0</span>
+                                <span class="stat-unit">kcal</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card target">
+                            <div class="stat-label">Günlük Hedef</div>
+                            <div class="stat-value">
+                                <span id="target-calories">2000</span>
+                                <span class="stat-unit">kcal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- İlerleme Çubuğu -->
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Günlük Kalori İlerlemesi</span>
+                            <span id="calorie-progress-text">0%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar" id="calorie-progress-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- VKİ Göstergesi -->
+                    <div class="bmi-display">
+                        <h3>Vücut Kitle İndeksi (VKİ)</h3>
+                        <div class="bmi-value" id="bmi-value">22.5</div>
+                        <div class="bmi-category" id="bmi-category">Normal</div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     BESLENME SAYFASI
+                     ============================================================ -->
+                <div id="nutrition-page" class="page">
+                    <div class="section-header">
+                        <h3>🍽️ Beslenme Günlüğü</h3>
+                    </div>
+
+                    <!-- Kahvaltı -->
+                    <div class="meal-category">
+                        <div class="category-header">
+                            <span class="category-title">☀️ Kahvaltı</span>
+                            <button class="btn btn-primary" id="add-kahvalti-btn">Ekle +</button>
+                        </div>
+                        <div class="meal-list" id="meals-kahvalti">
+                            <p class="empty-message">Henüz yemek eklenmedi</p>
+                        </div>
+                    </div>
+
+                    <!-- Öğle Yemeği -->
+                    <div class="meal-category">
+                        <div class="category-header">
+                            <span class="category-title">🌞 Öğle Yemeği</span>
+                            <button class="btn btn-primary" id="add-ogle-btn">Ekle +</button>
+                        </div>
+                        <div class="meal-list" id="meals-ogle">
+                            <p class="empty-message">Henüz yemek eklenmedi</p>
+                        </div>
+                    </div>
+
+                    <!-- Akşam Yemeği -->
+                    <div class="meal-category">
+                        <div class="category-header">
+                            <span class="category-title">🌙 Akşam Yemeği</span>
+                            <button class="btn btn-primary" id="add-aksam-btn">Ekle +</button>
+                        </div>
+                        <div class="meal-list" id="meals-aksam">
+                            <p class="empty-message">Henüz yemek eklenmedi</p>
+                        </div>
+                    </div>
+
+                    <!-- Ara Öğün -->
+                    <div class="meal-category">
+                        <div class="category-header">
+                            <span class="category-title">🍎 Ara Öğün</span>
+                            <button class="btn btn-primary" id="add-ara_ogun-btn">Ekle +</button>
+                        </div>
+                        <div class="meal-list" id="meals-ara_ogun">
+                            <p class="empty-message">Henüz yemek eklenmedi</p>
+                        </div>
+                    </div>
+
+                    <!-- Özet -->
+                    <div class="summary-box" id="nutrition-total">
+                        Toplam: 0 kcal
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     EGZERSİZ SAYFASI
+                     ============================================================ -->
+                <div id="exercise-page" class="page">
+                    <div class="section-header">
+                        <h3>🏃‍♂️ Egzersiz Günlüğü</h3>
+                        <button class="btn btn-primary" id="add-exercise-btn">Egzersiz Ekle +</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="exercise-list" id="exercises-list">
+                            <p class="empty-message">Henüz egzersiz eklenmedi</p>
+                        </div>
+                    </div>
+
+                    <!-- Özet -->
+                    <div class="summary-box" id="exercise-total">
+                        Toplam: 0 kcal yakıldı
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     PROFİL SAYFASI
+                     ============================================================ -->
+                <div id="profile-page" class="page">
+                    <div class="section-header">
+                        <h3>👤 Profilim</h3>
+                    </div>
+
+                    <div class="profile-info" id="profile-info">
+                        <!-- Dinamik olarak doldurulacak -->
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn btn-primary" style="width: 100%;" onclick="showPage('welcome-page')">
+                            Profili Düzenle ✏️
+                        </button>
+                        <button class="btn" style="width: 100%; margin-top: 1rem; background: #e74c3c; color: white;" id="reset-profile-btn">
+                            Tüm Verileri Sıfırla 🗑️
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-page="dashboard-page">
+                <span class="nav-icon">🏠</span>
+                <span>Ana Sayfa</span>
+            </button>
+            <button class="nav-btn" data-page="nutrition-page">
+                <span class="nav-icon">🍽️</span>
+                <span>Beslenme</span>
+            </button>
+            <button class="nav-btn" data-page="exercise-page">
+                <span class="nav-icon">🏃‍♂️</span>
+                <span>Egzersiz</span>
+            </button>
+            <button class="nav-btn" data-page="profile-page">
+                <span class="nav-icon">👤</span>
+                <span>Profil</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- ============================================================
+         MODAL: Yemek Ekle
+         ============================================================ -->
+    <div class="modal" id="add-meal-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="meal-modal-title">Yemek Ekle</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-meal-form">
+                    <div class="form-group">
+                        <label for="food-select">Yemek Seçin (Opsiyonel)</label>
+                        <select id="food-select">
+                            <option value="">-- Manuel gir --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="meal-name">Yemek Adı *</label>
+                        <input type="text" id="meal-name" placeholder="Örn: Menemen" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="meal-calories">Kalori (kcal) *</label>
+                        <input type="number" id="meal-calories" placeholder="Örn: 250" min="1" max="5000" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-cancel">İptal</button>
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL: Egzersiz Ekle
+         ============================================================ -->
+    <div class="modal" id="add-exercise-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Egzersiz Ekle</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-exercise-form">
+                    <div class="form-group">
+                        <label for="exercise-select">Egzersiz *</label>
+                        <select id="exercise-select" required>
+                            <option value="">-- Egzersiz seç --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercise-duration" id="exercise-duration-label">Süre (dakika) *</label>
+                        <input type="number" id="exercise-duration" placeholder="Örn: 30" min="1" max="1000" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-cancel">İptal</button>
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Modülleri (Sırayla yükle) -->
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/calculations.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
